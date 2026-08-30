@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de linhas evolutivas</title>
+</head>
+<body>
+    <h2>Minhas linhas evolutivas</h2>
+    <a href="/create/">Criar nova linha</a>
+
+    {% for line in lines %}
+        <div>
+            <h3 style="display: inline;">{{line.name}}</h3>
+            <h2 style="display: inline;">{{line.id}}</h2>
+
+            <form method="post" action="/line/{{line.id}}/update/" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit">Editar</button>
+            </form>
+
+            <form method="post" action="/line/{{line.id}}/delete/" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit">Excluir</button>
+            </form>
+        </div>
+    {% empty %}
+        <p>Você ainda não possui nenhuma linha evolutiva.</p>
+
+    {% endfor %}
+</body>
+</html>

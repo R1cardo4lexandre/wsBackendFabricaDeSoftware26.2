@@ -29,7 +29,7 @@ def create_line(request):
         line.user = request.user #Garantindo que a linha perteça ao usuário
         form.save()    
         
-        return redirect('create/')
+        return redirect('/line/')
     
     return render(request, 'digimon/create_line.html', {'form': form})
 
@@ -48,7 +48,7 @@ def update_line(request, id):
         if form.is_valid():
             form.save()
         
-            return redirect('/create/')
+            return redirect('/line/')
     else:
         form = EvolutionLineForm(instance=line)
     
@@ -66,4 +66,12 @@ def delete_line(request, id):
     
     if request.method == 'POST':
         line.delete()
-        return redirect('/create/')
+        return redirect('/line/')
+    
+#Listar linhas evolutivas criadas pelo usuário
+@login_required
+def list_lines(request):
+    #Buscando as linhas que pertencem ao usuário atual
+    lines = EvolutionLine.objects.filter(user=request.user)
+    
+    return render(request, 'digimon/list_lines.html', {'lines': lines})
