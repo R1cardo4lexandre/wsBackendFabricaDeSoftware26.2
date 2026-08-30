@@ -121,6 +121,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+#Redirecionamento de página nas telas de autenticação do usuário
+LOGIN_REDIRECT_URL = '/admin/'
+LOGOUT_REDIRECT_URL = '//'
+
 
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration

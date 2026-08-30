@@ -18,4 +18,4 @@ class EvolutionLine(models.Model):
     super_ultimate_id = models.PositiveIntegerField(null=True, blank=True)
     
     def __str__(self):
-        return EvolutionLine.name
+        return self.name

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="registration.css">
+    <title>Cadastro</title>
+</head>
+
+<style>
+    /*Estilo das páginas de autenticação*/
+    body{
+        background-color: rgb(38, 45, 54);
+    }
+
+    /*Centralizando das divs*/
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100vw;
+    }
+
+    .content {
+        background-color: rgb(38, 146, 146);
+        color:rgb(6, 10, 26);
+        border: solid, 7px, rgb(0, 204, 255);
+        border-radius: 10px;
+        box-shadow: 15px 15px 5px rgba(0, 0, 0, 0.3);
+        padding: 20px;
+    }
+</style>
+
+<body>
+
+    <div class="container">
+        <div class="content">
+            <h2>Cadastro</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Cadastrar</button>
+            </form>    
+        </div>
+    </div>
+
+</body>
+</html>
