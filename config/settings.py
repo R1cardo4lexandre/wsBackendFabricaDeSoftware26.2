@@ -123,7 +123,9 @@ STATIC_URL = 'static/'
 
 #Redirecionamento de página nas telas de autenticação do usuário
 LOGIN_REDIRECT_URL = '/admin/'
-LOGOUT_REDIRECT_URL = '//'
+LOGIN_URL = '/accounts/login/'
+
+LOGOUT_REDIRECT_URL = '/'
 
 
 # Email
