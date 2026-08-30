@@ -4,29 +4,118 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de linhas evolutivas</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #282c3c;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        main { width: min(900px, 92%); margin: 32px auto; }
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .button, button {
+            display: inline-block;
+            border: 0;
+            border-radius: 16px;
+            padding: 9px 14px;
+            background: #08aeeb;
+            color: #111;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .lines { display: grid; gap: 16px; }
+        .line-card {
+            padding: 20px;
+            border-radius: 16px;
+            background: #342774;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .25);
+        }
+        .line-card h2 { margin: 0 0 14px; }
+        .digimon-list { display: grid; gap: 8px; }
+        .digimon {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, .1);
+        }
+        .digimon-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .digimon img {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+        }
+        .level { color: #70ddff; font-weight: bold; }
+        .actions { display: flex; gap: 10px; margin-top: 16px; }
+        .delete { background: #e75454; color: white; }
+        .empty { color: #d9d9d9; }
+        .api-error {
+            padding: 12px;
+            border-radius: 10px;
+            background: #7b3131;
+        }
+    </style>
 </head>
 <body>
-    <h2>Minhas linhas evolutivas</h2>
-    <a href="/create/">Criar nova linha</a>
-
-    {% for line in lines %}
-        <div>
-            <h3 style="display: inline;">{{line.name}}</h3>
-            <h2 style="display: inline;">{{line.id}}</h2>
-
-            <form method="post" action="/line/{{line.id}}/update/" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit">Editar</button>
-            </form>
-
-            <form method="post" action="/line/{{line.id}}/delete/" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit">Excluir</button>
-            </form>
+    <main>
+        <div class="page-header">
+            <h1>Minhas linhas evolutivas</h1>
+            <div class="actions">
+                <a class="button" href="/">Voltar para home</a>
+                <a class="button" href="/create/">Criar nova linha</a>
+            </div>
         </div>
-    {% empty %}
-        <p>Você ainda não possui nenhuma linha evolutiva.</p>
 
-    {% endfor %}
+        {% if api_error %}
+            <p class="api-error">Não foi possível buscar alguns nomes na API; os IDs foram mantidos.</p>
+        {% endif %}
+
+        <section class="lines">
+            {% for line in lines %}
+                <article class="line-card">
+                    <h2>{{ line.name }}</h2>
+
+                    <div class="digimon-list">
+                        {% for digimon in line.digimons %}
+                            <div class="digimon">
+                                <span class="level">{{ digimon.level }}</span>
+                                <span class="digimon-info">
+                                    <img src="https://digi-api.com/images/digimon/w/{{ digimon.name|cut:' ' }}.png" alt="{{ digimon.name }}">
+                                    <span>{{ digimon.name }} <small>(ID {{ digimon.id }})</small></span>
+                                </span>
+                            </div>
+                        {% empty %}
+                            <p class="empty">Nenhum Digimon foi adicionado a esta linha.</p>
+                        {% endfor %}
+                    </div>
+
+                    <div class="actions">
+                        <a class="button" href="/line/{{ line.id }}/update/">Editar</a>
+                        <form method="post" action="/line/{{ line.id }}/delete/">
+                            {% csrf_token %}
+                            <button class="delete" type="submit">Excluir</button>
+                        </form>
+                    </div>
+                </article>
+            {% empty %}
+                <p class="empty">Você ainda não possui nenhuma linha evolutiva.</p>
+            {% endfor %}
+        </section>
+    </main>
 </body>
 </html>

@@ -41,7 +41,12 @@
         
                 {{ form.as_p }}
                 <button type="submit">Entrar</button>
-            </form>    
+            </form>
+
+            <form method="post" action="{% url 'go_to_register' %}">
+                {% csrf_token %}
+                <button type="submit">Criar conta</button>
+            </form>
         </div>
     </div>
 

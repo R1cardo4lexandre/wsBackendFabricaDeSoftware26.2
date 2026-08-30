@@ -122,7 +122,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 #Redirecionamento de página nas telas de autenticação do usuário
-LOGIN_REDIRECT_URL = '/admin/'
+LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/accounts/login/'
 
 LOGOUT_REDIRECT_URL = '/'
