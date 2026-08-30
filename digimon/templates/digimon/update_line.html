@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Criar linha evolutiva</title>
+    <title>Edição</title>
 </head>
 <body>
     <div class="container">
         <div class="content">
-            <h2>Criar nova linha evolutiva</h2>
+            <h2>Editar uma linha evolutiva</h2>
             <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit">Cadastrar</button>
+                <button type="submit">Salvar alterações</button>
             </form>
         </div>
     </div>

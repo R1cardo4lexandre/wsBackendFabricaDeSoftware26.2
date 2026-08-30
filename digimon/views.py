@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from .forms import EvolutionLineForm
+from .models import EvolutionLine
 
 def register(request):
     
@@ -31,3 +32,38 @@ def create_line(request):
         return redirect('create/')
     
     return render(request, 'digimon/create_line.html', {'form': form})
+
+#Editar linha evolutiva já criada
+@login_required
+def update_line(request, id):
+    #line recebe o objeto que corresponde ao id e ao usuário que está requisitando
+    line = get_object_or_404(
+        EvolutionLine,
+        id=id,
+        user=request.user
+    )
+    
+    if request.method == 'POST':
+        form = EvolutionLineForm(request.POST, instance=line)
+        if form.is_valid():
+            form.save()
+        
+            return redirect('/create/')
+    else:
+        form = EvolutionLineForm(instance=line)
+    
+    return render(request, 'digimon/update_line.html', {'form': form})
+
+#Apagar linha evolutiva
+@login_required
+def delete_line(request, id):
+    #Variável line para receber o objeto obtido com o índice
+    line = get_object_or_404(
+        EvolutionLine,
+        id=id,
+        user=request.user
+    )
+    
+    if request.method == 'POST':
+        line.delete()
+        return redirect('/create/')
