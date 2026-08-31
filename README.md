@@ -161,8 +161,6 @@ DATABASES = {
 }
 ```
 
-> Observação: o projeto atual salva alguns valores diretamente em `config/settings.py`; em produção, prefira externalizar esses dados para variáveis de ambiente.
-
 ## Execução
 
 1. Aplique as migrações do banco:
@@ -232,7 +230,3 @@ Este projeto é um exemplo prático de uso do Django para gestão de dados perso
 - melhorias na interface do usuário;
 - uso de variáveis de ambiente em produção;
 - deploy em ambiente web real.
-
----
-
-Se quiser, posso também transformar este README em uma versão mais profissional, com badges, licença, screenshots e instruções específicas para Linux/Windows.
